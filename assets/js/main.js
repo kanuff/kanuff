@@ -82,6 +82,25 @@
 
 		}
 
+	// Handle submitted form responses
+	var $form = $('form#message-form'), //sourced from https://medium.com/@dmccoy/how-to-submit-an-html-form-to-google-sheets-without-google-forms-b833952cc175
+		url = 'https://script.google.com/macros/s/AKfycbyBYfqfBRBmxb230ZQPRd4z9X4N4ewjpieQ0j1f-NuBd6mPHrY/exec'
+
+	$('#submit-form').on('click', function (e) {
+		e.preventDefault();
+
+		var jqxhr = $.ajax({
+			url: url,
+			method: "GET",
+			dataType: "json",
+			data: $form.serializeObject()
+		}).then(
+			() => {
+				$form.trigger("reset")
+			}
+		);
+	})
+
 	// Gallery.
 		$('.gallery')
 			.on('click', 'a', function(event) {
